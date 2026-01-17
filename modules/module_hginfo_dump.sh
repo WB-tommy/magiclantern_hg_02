@@ -24,7 +24,7 @@ fi
 #~ rm $TMP_FILE
 
 $OBJCOPY -O binary -j .module_strings --set-section-flags .module_strings=load $@ $TMP_FILE || exit 0
-python2 `dirname $0`/module_strings_dump.py $TMP_FILE
+python3 `dirname $0`/module_strings_dump.py $TMP_FILE
 echo
 #echo "#-------- reading hg diff --------"
 $OBJCOPY -O binary -j .module_hgdiff --set-section-flags .module_hgdiff=load $@ $TMP_FILE || exit 0

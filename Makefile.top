@@ -1,3 +1,6 @@
+# Force bash shell for bash-specific syntax like ${f##...}
+SHELL := /bin/bash
+
 RM=rm
 MV=mv
 MKDIR=mkdir
@@ -41,15 +44,9 @@ INSTALL_FINISH ?= $(UMOUNT) $(CF_CARD)
 
 # this one is called from both platform and modules
 # copies all scripts, preserving directory structure
-# (simpler way to do this?)
+# simplified: use cp -r instead of complex shell parameter expansion
 INSTALL_ALL_SCRIPTS = \
-	$(call build,SCRIPTS,\
-		for f in $(shell find $(SCRIPT_DIR) -type f -name *.lua); do \
-			dst=$(INSTALL_SCRIPTS_DIR)/$${f\#\#$(SCRIPT_DIR)/}; \
-			dstdir=`dirname $$dst`; \
-			$(MKDIR) -p $$dstdir; \
-			$(CP) $$f $$dst; \
-		done)
+	$(call build,SCRIPTS,$(CP) -r $(SCRIPT_DIR)/* $(INSTALL_SCRIPTS_DIR)/)
 
 make_loop = +$(foreach entry, $(1), $(MAKE) -C $(entry) $(2);)
 

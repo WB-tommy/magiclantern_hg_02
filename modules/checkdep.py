@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # checks dependencies between modules (if a module requires some other module to be loaded)
 # and between modules and ML core (prints on what cameras the module will load)
 
@@ -46,9 +47,9 @@ for m in modules:
         deps = list(set(deps)-set(solved))
 
 if module_deps:
-    print "Depends on modules: "
+    print("Depends on modules: ")
     for m, d in module_deps:
-        print "    %s (%s)" % (m, ", ".join(d))
+        print("    %s (%s)" % (m, ", ".join(d)))
 
 # which cameras can fullfill the dependencies for this module?
 working_cameras = []
@@ -75,23 +76,23 @@ for c in cameras:
         if len(open(cam_sym).read()) == 0:
             not_checked_cameras.append(cam_name + " (empty sym)")
         else:
-            print solved, deps
+            print(solved, deps)
             not_checked_cameras.append(cam_name + " (error)")
     else:
         not_checked_cameras.append(cam_name)
 
 if working_cameras:
-    print "Will load on:\n   ", ", ".join(working_cameras)
+    print("Will load on:\n   ", ", ".join(working_cameras))
 
 if not_working_cameras:
-    print "Will NOT load on: "
+    print("Will NOT load on: ")
     for c, d in not_working_cameras:
         if len(d) > 4:
             d = d[:3] + ["and %d others" % (len(d)-3)]
-        print "    %s (%s)" % (c, ", ".join(d))
+        print("    %s (%s)" % (c, ", ".join(d)))
 
 if not_checked_cameras:
-    print "Not checked (compile ML for these cameras first):\n   ", ", ".join(not_checked_cameras)
+    print("Not checked (compile ML for these cameras first):\n   ", ", ".join(not_checked_cameras))
 
 if not working_cameras:
     # no cameras working? force dep checking again on next "make" and exit with error

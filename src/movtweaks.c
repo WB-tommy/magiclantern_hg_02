@@ -1065,10 +1065,13 @@ struct menu_entry expo_override_menus[] = {
 };
 #endif
 
+#if defined(FEATURE_SHUTTER_LOCK)
 void movie_tweak_menu_init()
 {
     menu_add( "Movie", movie_tweaks_menus, COUNT(movie_tweaks_menus) );
 }
+#endif
+
 static void movtweak_init()
 {
     menu_add( "Movie", mov_menus, COUNT(mov_menus) );
